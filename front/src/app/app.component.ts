@@ -13,10 +13,14 @@ export class AppComponent {
     constructor(private _httpClient: HttpClient) {}
 
     ngOnInit() {
+       this.getUsers();
+    }   
+
+    getUsers() {
         this._httpClient.get('http://localhost:3000/api/v1/users/1')
         .toPromise()
         .then(res => {
             console.log(res)
         });
-    }   
+    }
 }

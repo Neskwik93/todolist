@@ -9,6 +9,8 @@ services:
             - ./BDD/init.sql:/docker-entrypoint-initdb.d/init.sql
         ports:
             - "5432:5432"
+        networks:
+            - reseau
     backend:
         image: back
         depends_on:
@@ -17,6 +19,12 @@ services:
             - "3000:3000"
         networks:
             - reseau
+        environment:
+            DB_USER: eric
+            DB_PASSWORD: toto123
+            DB_HOST: db
+            DB_PORT: 5432
+            DB_NAME: todolist_db
     frontend:
         image: front
         depends_on: 
