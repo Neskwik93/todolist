@@ -1,0 +1,3 @@
+const JWT_SECRET = '4aeb5d1dedabce3ae6e6b454a52b58d66d580034e30011b8a5d5317de0730dbed36bbf3f7013dc38201a7fdaa653f3cdef0ce1e6585a9cfb117423549eb56330';
+
+module.exports = { JWT_SECRET };

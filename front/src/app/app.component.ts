@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-root',
@@ -8,19 +8,11 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class AppComponent {
-    title = 'front';
+    title = 'todolist';
 
-    constructor(private _httpClient: HttpClient) {}
+    constructor(private _router: Router) {}
 
     ngOnInit() {
-       this.getUsers();
+        this._router.navigate(['/login']);
     }   
-
-    getUsers() {
-        this._httpClient.get('http://localhost:3000/api/v1/users/1')
-        .toPromise()
-        .then(res => {
-            console.log(res)
-        });
-    }
 }
