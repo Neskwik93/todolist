@@ -31,7 +31,7 @@ class UsersController {
             await pool.query(queryStr, [user.lastname, user.firstname, user.email, hashedPassword]);
             return res.status(201).json({ response: 'user created' });
         } catch (err) {
-            res.status(500).json({ error: err.message });
+            return res.status(500).json({ error: err.message });
         }
     }
 

@@ -16,7 +16,7 @@ INSERT INTO users (lastname, firstname, email, password) VALUES ('Bomann', 'Eric
 CREATE TABLE task_list (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100),
-    deleted BOOLEAN
+    deleted BOOLEAN DEFAULT false
 );
 
 CREATE TABLE tasks (
@@ -27,6 +27,6 @@ CREATE TABLE tasks (
     long_desc VARCHAR(100),
     created_date DATE,
     end_date DATE(100),
-    completed BOOLEAN,
-    deleted BOOLEAN
+    completed BOOLEAN DEFAULT false,
+    deleted BOOLEAN DEFAULT false
 );
