@@ -7,7 +7,7 @@ CREATE TABLE users (
     lastname VARCHAR(100),
     firstname VARCHAR(100),
     email VARCHAR(100),
-    pwd VARCHAR(100)
+    password VARCHAR(100)
 );
 
 INSERT INTO users (lastname, firstname, email, pwd) VALUES ('Bomann', 'Eric', 'monadressemail@orange.com', 'password');

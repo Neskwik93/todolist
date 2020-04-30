@@ -1,6 +1,6 @@
 const { pool } = require('../config/database');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const { createAccessToken } = require('../utils/jwt');
 
 class UsersController {
     static async getUserById(req, res) {
@@ -46,15 +46,29 @@ class UsersController {
 
     static async login(req, res) {
         let user = req.body;
-        if (!user) return res.status(500).send('error');
+        let userDb, token;
+        if (!user) return res.status(500).json({ error: true });
 
         pool.query('SELECT * FROM users WHERE email=$1;', [user.email])
-        .then(result => {
-            if(!result.rows || result.rows.length === 0) {
-                return res.json({error: true});
-            }
-            res.status(200).send('oui')
-        })
+            .then(result => {
+                if (!result.rows || result.rows.length === 0) {
+                    return res.status(500).json({ error: 'no user found' });
+                }
+                userDb = result.rows[0];
+                return bcrypt.compare(user.password, userDb.password);
+            })
+            .then(match => {
+                if (match) {
+                    token = createAccessToken(userDb.id);
+                    return pool.query(`UPDATE users SET token=$1 WHERE id=$2;`, [token, userDb.id]);
+                } else {
+                    return res.status(200).json({ error: 'login or password not correct' });
+                }
+            })
+            .then(() => {
+                return res.header('x-auth', token).json({ response: { token: token } });
+            })
+            .catch(err => res.status(500).json(err));
     }
 }
 
