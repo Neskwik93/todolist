@@ -8,6 +8,7 @@ body {
 
     .card {
         border: 1px solid #3f51b5a1;
+
         .card-header {
             background-color: #3f51b5a1;
         }
@@ -19,15 +20,38 @@ body {
         input {
             border-radius: 5px;
             border       : 1.5px solid #3f51b5;
+
+            &:focus {
+                outline: none;
+            }
         }
     }
 
     button {
-        padding         : 10px 20px;
-        background-color: #3f51b5;
-        color           : #fff;
-        text-align      : center;
-        border          : none;
-        border-radius   : 5px;
+        &.btnPerso {
+            padding         : 10px 20px;
+            background-color: #3f51b5;
+            color           : #fff;
+            text-align      : center;
+            border          : none;
+            border-radius   : 5px;
+
+            &:hover {
+                box-shadow: -1px 1px 3px 0px rgba(0, 0, 0, 0.61);
+            }
+        }
+
+        &.btnLink {
+            border: none;
+            color : rgb(112, 112, 252);
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        &:focus {
+            outline: none;
+        }
     }
 }

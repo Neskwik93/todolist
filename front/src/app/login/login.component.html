@@ -3,22 +3,63 @@
         <div class="card-header">
 
         </div>
-        <div class="card-body">
+        <div class="card-body" *ngIf="!registerMode">
             <div class="form-wrapper">
                 <div class="row form-group">
-                    <label class="col-2 offset-2" for="mail">Email</label>
-                    <input class="col-5" type="text" id="mail">
+                    <label class="col-md-2 offset-md-2" for="mail">Email</label>
+                    <input class="col-md-5" type="text" id="mail" [(ngModel)]="user.email">
                 </div>
                 <div class="row form-group">
-                    <label class="col-2 offset-2" for="password">Mot de passe</label>
-                    <input class="col-5" type="password" id="password">
+                    <label class="col-md-2 offset-md-2" for="password">Mot de passe</label>
+                    <input class="col-md-5" type="password" id="password" [(ngModel)]="user.password">
                 </div>
                 <div class="row">
-                    <div class="col text-right">
-                        <button (click)="connexion()">Connexion</button>
+                    <div class="col text-center">
+                        <button class="btnPerso" (click)="login()">Connexion</button>
                     </div>
-                    <div class="col text-left">
-                        <button (click)="inscription()">Inscription</button>
+                </div>
+                <div class="row mt-2">
+                    <div class="col text-center">
+                        <button class="btnLink" (click)="switchMode()">Inscritpion</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body" *ngIf="registerMode">
+            <div class="form-wrapper">
+                <div class="row form-group">
+                    <label class="col-md-2 offset-md-2" for="lastname">Nom</label>
+                    <input class="col-md-5" type="text" id="lastname" [(ngModel)]="user.lastname">
+                </div>
+                <div class="row form-group">
+                    <label class="col-md-2 offset-md-2" for="firstname">Prenom</label>
+                    <input class="col-md-5" type="text" id="firstname" [(ngModel)]="user.firstname">
+                </div>
+                <div class="row form-group">
+                    <label class="col-md-2 offset-md-2" for="mail">Email *</label>
+                    <input class="col-md-5" type="text" id="mail" [(ngModel)]="user.email">
+                </div>
+                <div class="row form-group">
+                    <label class="col-md-2 offset-md-2" for="password">Mot de passe *</label>
+                    <input class="col-md-5" type="password" id="password" [(ngModel)]="user.password">
+                </div>
+                <div class="row form-group">
+                    <label class="col-md-2 offset-md-2" for="passwordConf">Mot de passe *</label>
+                    <input class="col-md-5" type="password" id="passwordConf" [(ngModel)]="passwordConf">
+                </div>
+                <div class="row mb-2">
+                    <div class="col text-center">
+                        * Informations obligatoires
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col text-center">
+                        <button class="btnPerso" (click)="register()">Inscritpion</button>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col text-center">
+                        <button class="btnLink" (click)="switchMode()">Connexion</button>
                     </div>
                 </div>
             </div>

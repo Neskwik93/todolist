@@ -21,54 +21,48 @@ class UsersController {
         if (!regexmail.test(user.email)) {
             return res.status(400).json({ error: 'invalid email address' });
         }
+        try {
+            let userRows = await pool.query('SELECT * FROM users WHERE email=$1;', [user.email]);
 
-        pool.query('SELECT * FROM users WHERE email=$1;', [user.email])
-            .then(response => {
-                if (response.rows && response.rows.length > 0) {
-                    return res.status(400).json({ error: 'mail already used' });
-                }
+            if (userRows.rows && userRows.rows.length > 0) {
+                return res.status(400).json({ error: 'mail already used' });
+            }
 
-                return bcrypt.hash(user.password, 10);
-            })
-            .then(hashedPassword => {
-                let queryStr = `
-                INSERT INTO users (lastname, firstname, email, pwd) 
-                VALUES ($1, $2, $3, $4);
-                `;
+            let hashedPassword = await bcrypt.hash(user.password, 10);
+            let queryStr = `
+            INSERT INTO users (lastname, firstname, email, password) 
+            VALUES ($1, $2, $3, $4);
+            `;
 
-                return pool.query(queryStr, [user.lastname, user.firstname, user.email, hashedPassword]);
-            })
-            .then(() => {
-                return res.status(201).json({ response: 'user created' });
-            })
-            .catch(err => res.status(500).json({ error: err }));
+            await pool.query(queryStr, [user.lastname, user.firstname, user.email, hashedPassword]);
+            return res.status(201).json({ response: 'user created' });
+        } catch (err) {
+            res.status(500).json({ error: err.message });
+        }
     }
 
     static async login(req, res) {
         let user = req.body;
         let userDb, token;
         if (!user) return res.status(500).json({ error: true });
+        try {
+            let userRows = await pool.query('SELECT * FROM users WHERE email=$1;', [user.email]);
+            if (!userRows.rows || userRows.rows.length === 0) {
+                return res.status(500).json({ error: 'no user found' });
+            }
 
-        pool.query('SELECT * FROM users WHERE email=$1;', [user.email])
-            .then(result => {
-                if (!result.rows || result.rows.length === 0) {
-                    return res.status(500).json({ error: 'no user found' });
-                }
-                userDb = result.rows[0];
-                return bcrypt.compare(user.password, userDb.password);
-            })
-            .then(match => {
-                if (match) {
-                    token = createAccessToken(userDb.id);
-                    return pool.query(`UPDATE users SET token=$1 WHERE id=$2;`, [token, userDb.id]);
-                } else {
-                    return res.status(200).json({ error: 'login or password not correct' });
-                }
-            })
-            .then(() => {
-                return res.header('x-auth', token).json({ response: { token: token } });
-            })
-            .catch(err => res.status(500).json(err));
+            userDb = userRows.rows[0];
+            let match = await bcrypt.compare(user.password, userDb.password);
+            if (!match) {
+                return res.status(200).json({ error: 'login or password not correct' });
+            }
+
+            token = createAccessToken(userDb.id);
+            await pool.query(`UPDATE users SET token=$1 WHERE id=$2;`, [token, userDb.id]);
+            return res.header('x-auth', token).json({ response: { token: token } });
+        } catch (err) {
+            return res.status(500).json({ error: err.message });
+        }
     }
 }
 
