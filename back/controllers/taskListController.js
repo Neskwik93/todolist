@@ -1,10 +1,11 @@
 const { pool } = require('../config/database');
+const TasksController = require('./tasksController');
 
 class TaskListController {
     static async getByUser(req, res) {
         let userId = req.userId;
         try {
-            let result = await pool.query('SELECT id, name FROM task_list WHERE user_id=$1;', [userId]);
+            let result = await pool.query('SELECT id, name FROM task_list WHERE user_id=$1 AND NOT deleted;', [userId]);
             return res.status(200).json({ response: result.rows });
         } catch (err) {
             return res.status(500).json({ error: err.message });
@@ -35,9 +36,11 @@ class TaskListController {
     static async delete(req, res) {
         let taskListId = req.params.id;
         try {
+            await TasksController.deleteTasksByTaskListId(taskListId);
             await pool.query('UPDATE task_list SET deleted=true WHERE id=$1;', [taskListId]);
             return res.status(200).json({ response: 'task list deleted' });
         } catch (err) {
+            console.log(err)
             return res.status(500).json({ error: err.message });
         }
     }
