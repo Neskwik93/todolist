@@ -11,4 +11,22 @@ CREATE TABLE users (
     token VARCHAR 
 );
 
-INSERT INTO users (lastname, firstname, email, pwd) VALUES ('Bomann', 'Eric', 'monadressemail@orange.com', 'password');
+INSERT INTO users (lastname, firstname, email, password) VALUES ('Bomann', 'Eric', 'monadressemail@orange.com', 'password');
+
+CREATE TABLE task_list (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    deleted BOOLEAN
+);
+
+CREATE TABLE tasks (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER,
+    task_list_id INTEGER,
+    short_desc VARCHAR(100),
+    long_desc VARCHAR(100),
+    created_date DATE,
+    end_date DATE(100),
+    completed BOOLEAN,
+    deleted BOOLEAN
+);
