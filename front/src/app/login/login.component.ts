@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
     user: User = new User({});
     registerMode: boolean = false;
     passwordConf: string;
+    emailConf: string;
 
     constructor(private _cookieService: CookieService, private _appService: AppService) { }
 
@@ -40,8 +41,7 @@ export class LoginComponent implements OnInit {
     }
 
     register() {
-        if(this.user.password && this.user.email && this.user.password === this.passwordConf) {
-            console.log(this.user)
+        if(this.user.password && this.user.email && this.user.password === this.passwordConf && this.user.email === this.emailConf) {
             this._appService.post('users/register', this.user).then(res => {
                 if(res.response) {
                     this._cookieService.set('token', res.response.token);

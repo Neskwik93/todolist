@@ -40,11 +40,15 @@
                     <input class="col-md-5" type="text" id="mail" [(ngModel)]="user.email">
                 </div>
                 <div class="row form-group">
+                    <label class="col-md-2 offset-md-2" for="mailConf">Confirmation email *</label>
+                    <input class="col-md-5" type="text" id="mailConf" [(ngModel)]="emailConf">
+                </div>
+                <div class="row form-group">
                     <label class="col-md-2 offset-md-2" for="password">Mot de passe *</label>
                     <input class="col-md-5" type="password" id="password" [(ngModel)]="user.password">
                 </div>
                 <div class="row form-group">
-                    <label class="col-md-2 offset-md-2" for="passwordConf">Mot de passe *</label>
+                    <label class="col-md-2 offset-md-2" for="passwordConf">Confirmation mot de passe *</label>
                     <input class="col-md-5" type="password" id="passwordConf" [(ngModel)]="passwordConf">
                 </div>
                 <div class="row mb-2">
