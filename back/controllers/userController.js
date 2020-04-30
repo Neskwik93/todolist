@@ -3,12 +3,6 @@ const bcrypt = require('bcrypt');
 const { createAccessToken } = require('../utils/jwt');
 
 class UsersController {
-    static async getUserById(req, res) {
-        pool.query('SELECT * FROM users;').then(response => {
-            res.status(200).json({ response: response.rows });
-        }).catch(err => res.status(500).json({ error: err }));
-    };
-
     static async register(req, res) {
         let user = req.body;
         let regexmail = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -37,7 +31,7 @@ class UsersController {
             await pool.query(queryStr, [user.lastname, user.firstname, user.email, hashedPassword]);
             return res.status(201).json({ response: 'user created' });
         } catch (err) {
-            res.status(500).json({ error: err.message });
+            return res.status(500).json({ error: err.message });
         }
     }
 
