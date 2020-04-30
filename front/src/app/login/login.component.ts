@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { CookieService } from 'ngx-cookie-service';
 import { AppService } from '../app.service';
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit {
     passwordConf: string;
     emailConf: string;
 
-    constructor(private _cookieService: CookieService, private _appService: AppService) { }
+    constructor(private _cookieService: CookieService, private _appService: AppService, private _router: Router) { }
 
     ngOnInit() {
     }
@@ -27,6 +28,7 @@ export class LoginComponent implements OnInit {
             this._appService.post('users/login', this.user).then(res => {
                 if(res.response) {
                     this._cookieService.set('token', res.response.token);
+                    this._router.navigate(['/home']);
                 }
                 //TODO: gestion d'erreur
             });
