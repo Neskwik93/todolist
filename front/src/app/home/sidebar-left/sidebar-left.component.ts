@@ -56,17 +56,17 @@ export class SidebarLeftComponent implements OnInit {
     }
     
     addList() {
-        let newTaskList: TaskList = new TaskList({name: 'Nouvelle liste', newList: true});
+        let newTaskList: TaskList = new TaskList({name: 'Nouvelle liste', new: true});
         this.ttTaskList.push(newTaskList);
     }
 
     saveTaskList(newTaskList) {
         this._appService.post('taskList/add', newTaskList).then(res => {
             if(res.response) {
-                newTaskList.newList = false;
+                newTaskList.new = false;
                 newTaskList.id = res.response.newId;
             }
-        })
+        });
     }
 
     deleteList(taskListId: number) {

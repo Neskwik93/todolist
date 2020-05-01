@@ -28,6 +28,15 @@ export class AppService {
             });
     }
 
+    put(url: string, value: any) {
+        this.addTokenHeader();
+        return this._http.put(this.urlServeur + url, value, this.httpOptions)
+            .toPromise()
+            .then((res: any) => {
+                return res;
+            });
+    }
+
     delete(url: string) {
         this.addTokenHeader();
         return this._http.delete(this.urlServeur + url, this.httpOptions)
@@ -65,7 +74,7 @@ export class AppService {
             this.get('taskList/getByUser').then(res => {
                 if (res.response) {
                     res.response.forEach(taskList => {
-                        taskList.newList = false;
+                        taskList.new = false;
                     });
                 }
                 resolve(res);

@@ -19,8 +19,7 @@ class TasksController {
         try {
             let queryStr = `INSERT INTO tasks 
             (task_list_id, short_desc, long_desc, created_date, end_date, completed, deleted)
-            VALUES ($1, $2 ,$3, $4, $5, $6, $7)
-            `;
+            VALUES ($1, $2 ,$3, $4, $5, $6, $7) RETURNING id;`;
             await pool.query(queryStr, [
                 task.task_list_id, task.short_desc, task.long_desc, new Date(), task.end_date, false, false
             ]);
@@ -42,7 +41,7 @@ class TasksController {
 
     static async complete(req, res) {
         let task = req.body;
-        if (!task.completed || !task.id) {
+        if (task.completed === null || task.completed === undefined || !task.id) {
             return res.status(200).json({ error: 'missing parameters' });
         }
         try {

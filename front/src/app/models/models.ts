@@ -4,6 +4,7 @@ export class User {
     lastname: string;
     email: string;
     password: string;
+    new: boolean;
     constructor(info: any) {
         for (let k in info) {
             if (info.hasOwnProperty(k)) {
@@ -18,7 +19,7 @@ export class TaskList {
     name: string;
     deleted: boolean;
     user_id: number;
-    newList: boolean;
+    new: boolean;
     constructor(info: any) {
         for (let k in info) {
             if (info.hasOwnProperty(k)) {
@@ -37,6 +38,7 @@ export class Task {
     end_date: Date;
     completed: boolean;
     deleted: boolean;
+    new: boolean;
     constructor(info: any) {
         for (let k in info) {
             if (info.hasOwnProperty(k)) {

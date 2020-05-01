@@ -1,27 +1,19 @@
 @import "~bootstrap/dist/css/bootstrap.css";
-
-$bleu_fonce : #3f51b5;
-$bleu_clair : #3f51b5a1;
+@import "./app/sass/variables";
 
 body {
     position   : relative;
     margin     : 0;
     font-family: "Open Sans", sans-serif;
+    color      : $bleu_fonce;
+
+    input {
+        width: 100%;
+    }
 
     #app-title {
         font-family: 'Times New Roman', Times, serif;
         font-size  : 4rem;
-        color      : $bleu_fonce;
-    }
-
-    .iconBtn {
-        border          : none;
-        background-color: #f0f8ff00;
-        color           : white;
-
-        &.red {
-            color: #fd5e5e;
-        }
     }
 
     .main-content {
@@ -64,18 +56,34 @@ body {
             }
         }
 
+        &.btnIcon {
+            border          : none;
+            background-color: #f0f8ff00;
+            color           : white;
+
+        }
+
         &.btnLink {
             background-color: #00000000;
             border          : none;
             color           : white;
 
-            &.blue {
-                color: rgb(112, 112, 252);
-            }
 
             &:hover {
                 text-decoration: underline;
             }
+        }
+
+        &.blue {
+            color: $bleu_clair;
+        }
+
+        &.red {
+            color: #fd5e5e;
+        }
+
+        &.green {
+            color: #0dc506;
         }
 
         &:focus {

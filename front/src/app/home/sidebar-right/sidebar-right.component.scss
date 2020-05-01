@@ -1,3 +1,5 @@
+@import "../../sass/variables";
+
 #sidebarRight {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.64);
     position  : fixed;
@@ -9,8 +11,8 @@
     right     : 0;
     bottom    : 0;
     width     : 400px;
-    background: #4a5dc9;
+    background: $bleu_fonce;
     .card {
-        color: #4a5dc9;
+        color: $bleu_fonce;
     }
 }

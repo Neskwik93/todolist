@@ -4,23 +4,76 @@
         <div class="col">
             <div class="card">
                 <div class="card-header">
-                    <button *ngIf="ttTask" class="iconBtn" title="Ajouter une tâche" (click)="addTask()"
+                    <button *ngIf="ttTask" class="btnIcon" title="Ajouter une tâche" (click)="addTask()"
                         style="position: fixed;">
                         <i class="fas fa-plus-circle fa-2x"></i>
                     </button>
                     <h3 class="text-center">{{title}}</h3>
                 </div>
-                <div class="card-body">
-                    <div class="row" *ngIf="ttTask && ttTask.length > 0">
-                        <div class="col" *ngFor="let task of ttTask">
+                <div class="card-body" *ngIf="ttTask && ttTask.length > 0">
+                    <div class="row">
+                        <div class="col text-center">
+                            <h4>
+                                <button class="btnLink blue w-100" [ngClass]="{'selected': mode === 'c'}"
+                                    (click)="switchMode('c')">En cours</button>
+                            </h4>
+                        </div>
+                        <div class="col text-center">
+                            <h4>
+                                <button class="btnLink blue w-100" [ngClass]="{'selected': mode === 't'}"
+                                    (click)="switchMode('t')">Terminées</button>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-2" *ngFor="let task of ttTaskDisplayed">
                             <div class="card">
                                 <div class="card-header">
-                                    <button class="btnLink" (click)="selectTask(task)">
+                                    <button *ngIf="!task.new" class="btnLink" (click)="selectTask(task)">
                                         {{task.short_desc}}
                                     </button>
+                                    <input type="text" *ngIf="task.new" [(ngModel)]="task.short_desc">
                                 </div>
                                 <div class="card-body">
-                                    {{task.long_sec}}
+                                    <div class="row mb-2">
+                                        <div class="col" *ngIf="!task.new">
+                                            {{task.long_desc}}
+                                        </div>
+                                        <div class="col" *ngIf="task.new">
+                                            <textarea class="w-100" [(ngModel)]="task.long_desc"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-4">
+                                        <div class="col">
+                                            date d'échéance
+                                        </div>
+                                        <div class="col" *ngIf="!task.new">
+                                            {{task.end_date | date:'dd/MM/yyyy'}}
+                                        </div>
+                                        <div class="col" *ngIf="task.new">
+                                            <input type="date" [(ngModel)]="task.end_date">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 offset-md-6 text-right">
+                                            <button class="btnLink green" *ngIf="!task.new && !task.completed" (click)="completeTask(task)"
+                                                title="Marquer la tâche à terminée">
+                                                <i class="fas fa-check fa-2x"></i>
+                                            </button>
+                                            <button class="btnLink red" *ngIf="!task.new && task.completed" (click)="completeTask(task)"
+                                                title="Marquer la tâche à en cours">
+                                                <i class="fas fa-times fa-2x"></i>
+                                            </button>
+                                            <button class="btnIcon red" *ngIf="task.new" (click)="cancelAdd(task)"
+                                                title="Annuler">
+                                                <i class="fas fa-times-circle fa-2x"></i>
+                                            </button>
+                                            <button class="btnIcon blue" *ngIf="task.new" (click)="saveTask(task)"
+                                                title="Enregistrer">
+                                                <i class="fas fa-save fa-2x"></i>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
