@@ -20,10 +20,10 @@ class TasksController {
             let queryStr = `INSERT INTO tasks 
             (task_list_id, short_desc, long_desc, created_date, end_date, completed, deleted)
             VALUES ($1, $2 ,$3, $4, $5, $6, $7) RETURNING id;`;
-            await pool.query(queryStr, [
+            let result = await pool.query(queryStr, [
                 task.task_list_id, task.short_desc, task.long_desc, new Date(), task.end_date, false, false
             ]);
-            return res.status(201).json({ response: 'task created' });
+            return res.status(201).json({ response: { newId: result.rows[0].id } });
         } catch (err) {
             return res.status(500).json({ error: err.message });
         }

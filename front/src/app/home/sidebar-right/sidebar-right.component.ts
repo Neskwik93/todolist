@@ -1,4 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import Swal from 'sweetalert2';
+
+import { AppService } from 'src/app/app.service';
 
 import { Task } from 'src/app/models/models';
 
@@ -11,8 +14,9 @@ declare var $: any;
 })
 export class SidebarRightComponent implements OnInit {
     @Input() selectedTask: Task;
+    @Output() eventDeleteTask: any = new EventEmitter();
 
-    constructor() { }
+    constructor(private _appService: AppService) { }
 
     ngOnInit() {
     }
@@ -35,6 +39,25 @@ export class SidebarRightComponent implements OnInit {
 
     close() {
         $("#sidebarRight").trigger("sidebar:close");
+    }
+
+    deleteTask() {
+        Swal.fire({
+            title: 'Confirmez-vous la suppression ?',
+            icon: 'warning',
+            showCancelButton: true,
+            cancelButtonText: 'Annuler',
+            confirmButtonText: 'Confirmer'
+        }).then((result) => {
+            if (result.value) {
+                this._appService.delete('tasks/delete/' + this.selectedTask.id).then(res => {
+                    if (res.response) {
+                        this.close();
+                        this.eventDeleteTask.emit();
+                    }
+                });
+            }
+        })
     }
 
 }

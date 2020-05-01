@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import Swal from 'sweetalert2';
 
 import { SidebarLeftComponent } from './sidebar-left/sidebar-left.component';
 import { SidebarRightComponent } from './sidebar-right/sidebar-right.component';
@@ -100,5 +99,11 @@ export class HomeComponent implements OnInit, OnDestroy {
                 this.setDisplayedTasks();
             }
         });
+    }
+
+    deleteTask() {
+        this.ttTask = this.ttTask.filter(t => t.id !== this.selectedTask.id);
+        this.selectedTask = null;
+        this.setDisplayedTasks();
     }
 }

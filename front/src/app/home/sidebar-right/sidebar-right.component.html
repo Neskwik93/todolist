@@ -40,9 +40,24 @@
                         Date d'échéance
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col">
                         {{selectedTask.end_date | date:'dd/MM/yyyy, HH:mm'}}
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col">
+                        <ng-container *ngIf="selectedTask.completed">
+                            Tâche terminée
+                        </ng-container>
+                        <ng-container *ngIf="!selectedTask.completed">
+                            Tâche en cours
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button class="btnPerso" (click)="deleteTask()">Supprimer</button>
                     </div>
                 </div>
             </div>
