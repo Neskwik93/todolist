@@ -1,0 +1,282 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  description: "a classical but efficient todo list, I guess"
+  title: "TodoList API"
+host: "localhost:80"
+basePath: "/api/v1"
+tags:
+  - name: "users"
+    description: "Operations about user: login or register for exemple"
+  - name: "tasks"
+    description: "Operations about tasks: get, delete and more"
+  - name: "tasksList"
+    description: "Operations about tasks List: almost the same than tasks"
+schemes:
+  - "http"
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+paths:
+  /users/testAuth:
+    get:
+      summary: "Test authentication"
+      description: "Returns 'Hello (clin d'oeil Nicolas)' if user is auhtenticate, else throw an error"
+      tags:
+       - "users"
+      responses:
+        "200":
+          description: "User auhtenticated"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        "401":
+          description: "Token not sent"
+        "403":
+          description: "Token not valid"
+        "500":
+          description: "Internal error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /users/login:
+    post:
+      summary: "Log user"
+      tags:
+       - "users"
+      responses:
+        "200":
+          description: "User succesfully auhtenticated"
+          schema:
+            $ref: "#/definitions/LoginResponse"
+        "404":
+          description: "User not found"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "400":
+          description: "Invalid username/password supplied"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "500":
+          description: "Internal error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /users/register:
+    post:
+      summary: "Register user"
+      tags:
+       - "users"
+      responses:
+        "201":
+          description: "User succesfully registered"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        "400":
+          description: "Invalid or missing parameters"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "500":
+          description: "Internal error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /tasks/{id}:
+    get:
+      summary: "Get tasks by tasks list id"
+      tags:
+       - "tasks"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of tasksList to get all it's tasks"
+        required: true
+        type: "integer"
+      responses:
+        "200":
+          description: "All tasks from tasksList returned"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        "500":
+          description: "Internal error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      summary: "Delete task by id"
+      tags:
+       - "tasks"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of task to delete"
+        required: true
+        type: "integer"
+      responses:
+        "200":
+          description: "Task deleted"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        "500":
+          description: "Internal error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /tasks:
+    post:
+      summary: "Add a new task"
+      tags:
+       - "tasks"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Task to add"
+        required: true
+        schema: 
+          $ref: "#/definitions/Task"
+      responses:
+        "201":
+          description: "New task created"
+          schema:
+            $ref: "#/definitions/AddResponse"
+        "500":
+          description: "Internal error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    put:
+      summary: "Add a new task"
+      tags:
+       - "tasks"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Task to update"
+        required: true
+        schema: 
+          $ref: "#/definitions/Task"
+      responses:
+        "200":
+          description: "task updated"
+          schema:
+            $ref: "#/definitions/AddResponse"
+        "400":
+          description: "Missing parameters"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "500":
+          description: "Internal error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /taskList:
+    post:
+      summary: "Add a new tasks list"
+      tags:
+       - "tasksList"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Tasks list to add"
+        required: true
+        schema: 
+          $ref: "#/definitions/TasksList"
+      responses:
+        "201":
+          description: "New tasks list created"
+          schema:
+            $ref: "#/definitions/AddResponse"
+        "500":
+          description: "Internal error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    get:
+      summary: "Get all tasks lists for a user"
+      tags:
+       - "tasksList"
+      responses:
+        "200":
+          description: "All user tasks lists returned"
+          schema:
+            $ref: "#/definitions/TasksListsResponse"
+        "500":
+          description: "Internal error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /taskList/{id}:
+    delete:
+      summary: "Delete tasks list by id"
+      tags:
+       - "tasksList"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of tasks list to delete"
+        required: true
+        type: "integer"
+      responses:
+        "200":
+          description: "Tasks list deleted"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        "500":
+          description: "Internal error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+definitions:
+  ApiResponse:
+    type: "object"
+    properties:
+      response:
+        type: "string"
+  ErrorResponse:
+    type: "object"
+    properties:
+      error:
+        type: "string"
+  LoginResponse:
+    type: "object"
+    properties:
+      response:
+        type: "object"
+        properties:
+          token:
+            type: "string"
+  AddResponse:
+    type: "object"
+    properties:
+      response:
+        type: "object"
+        properties:
+          newId:
+            type: "integer"
+  TasksListsResponse:
+    type: "object"
+    properties:
+      response:
+        type: "array"
+        items:
+          $ref: "#/definitions/TasksList"
+  Task:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      task_list_id:
+        type: "integer"
+      short_desc:
+        type: "string"
+      long_desc:
+        type: "string"
+      created_date:
+        type: "string"
+      end_date:
+        type: "string"
+      completed:
+        type: "boolean"
+      deleted:
+        type: "boolean"
+  TasksList:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      name:
+        type: "string"
+      deleted:
+        type: "string"
+      user_id:
+        type: "integer"
