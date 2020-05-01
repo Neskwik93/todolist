@@ -105,6 +105,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     deleteTask() {
         this.ttTask = this.ttTask.filter(t => t.id !== this.selectedTask.id);
         this.selectedTask = null;
+        this.sidebarRightComponent.close();
         this.setDisplayedTasks();
     }
 }

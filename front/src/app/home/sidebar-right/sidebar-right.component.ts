@@ -45,7 +45,6 @@ export class SidebarRightComponent implements OnInit {
     close() {
         $('#voile').css('visibility', 'hidden');
         $('#sidebarRight').trigger('sidebar:close');
-        this.selectedTask = null;
     }
 
     deleteTask() {
@@ -59,7 +58,6 @@ export class SidebarRightComponent implements OnInit {
             if (result.value) {
                 this._appService.delete('tasks/' + this.selectedTask.id).then(res => {
                     if (res.response) {
-                        this.close();
                         this.eventDeleteTask.emit();
                     }
                 });

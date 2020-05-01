@@ -15,17 +15,17 @@ INSERT INTO users (lastname, firstname, email, password) VALUES ('Bomann', 'Eric
 CREATE TABLE task_list (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100),
+    user_id INTEGER,
     deleted BOOLEAN DEFAULT false
 );
 
 CREATE TABLE tasks (
     id SERIAL PRIMARY KEY,
-    user_id INTEGER,
     task_list_id INTEGER,
     short_desc VARCHAR(100),
     long_desc VARCHAR(100),
-    created_date TIMESTAMP WITH TIME,
-    end_date TIMESTAMP WITH TIME,
+    created_date TIMESTAMP WITH TIME ZONE,
+    end_date TIMESTAMP WITH TIME ZONE,
     completed BOOLEAN DEFAULT false,
     deleted BOOLEAN DEFAULT false
 );
