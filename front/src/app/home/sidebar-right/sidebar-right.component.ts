@@ -23,22 +23,29 @@ export class SidebarRightComponent implements OnInit {
 
     ngAfterViewInit() {
         $('#sidebarRight').css('height', $(window).height());
+        $('#voile').css('height', $(window).height());
+        $('#voile').css('width', $(window).width());
         $(window).resize(function () {
             $('#sidebarRight').css('height', $(window).height());
+            $('#voile').css('height', $(window).height());
+            $('#voile').css('width', $(window).width());
         });
-        $("#sidebarRight").sidebar({ side: "right" });
+        $('#sidebarRight').sidebar({ side: 'right' });
     }
 
     toggleRight() {
-        $("#sidebarRight").trigger("sidebar:toggle");
+        $('#sidebarRight').trigger('sidebar:toggle');
     }
 
     open() {
-        $("#sidebarRight").trigger("sidebar:open");
+        $('#voile').css('visibility', 'visible');
+        $('#sidebarRight').trigger('sidebar:open');
     }
 
     close() {
-        $("#sidebarRight").trigger("sidebar:close");
+        $('#voile').css('visibility', 'hidden');
+        $('#sidebarRight').trigger('sidebar:close');
+        this.selectedTask = null;
     }
 
     deleteTask() {
@@ -50,7 +57,7 @@ export class SidebarRightComponent implements OnInit {
             confirmButtonText: 'Confirmer'
         }).then((result) => {
             if (result.value) {
-                this._appService.delete('tasks/delete/' + this.selectedTask.id).then(res => {
+                this._appService.delete('tasks/' + this.selectedTask.id).then(res => {
                     if (res.response) {
                         this.close();
                         this.eventDeleteTask.emit();

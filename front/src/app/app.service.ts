@@ -71,7 +71,7 @@ export class AppService {
 
     getTaskList() {
         return new Promise((resolve, reject) => {
-            this.get('taskList/getByUser').then(res => {
+            this.get('taskList').then(res => {
                 if (res.response) {
                     res.response.forEach(taskList => {
                         taskList.new = false;

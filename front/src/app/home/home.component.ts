@@ -56,6 +56,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.ttTask = event.ttTasks;
         this.taskList = event.taskList;
         this.title = event.taskList.name;
+        this.mode = 'c';
         this.setDisplayedTasks();
     }
 
@@ -66,7 +67,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     completeTask(task: Task) {
         task.completed = !task.completed;
-        this._appService.put('tasks/complete', task).then(res => {
+        this._appService.put('tasks', task).then(res => {
             if (res.response) {
                 this.setDisplayedTasks();
             }
@@ -92,7 +93,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     saveTask(newTask: Task) {
-        this._appService.post('tasks/add', newTask).then(res => {
+        this._appService.post('tasks', newTask).then(res => {
             if (res.response) {
                 newTask.new = false;
                 newTask.id = res.response.newId;

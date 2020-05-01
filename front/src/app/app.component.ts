@@ -4,6 +4,8 @@ import { Router } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
 import { AppService } from "./app.service";
 
+declare var $: any
+
 @Component({
     selector: "app-root",
     templateUrl: "./app.component.html",

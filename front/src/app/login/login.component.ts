@@ -26,8 +26,8 @@ export class LoginComponent implements OnInit {
     login() {
         if(this.user.password && this.user.email) {
             this._appService.post('users/login', this.user).then(res => {
-                if(res.token) {
-                    this._cookieService.set('token', res.token);
+                if(res.response) {
+                    this._cookieService.set('token', res.response.token);
                     this._router.navigate(['/home']);
                 }
                 //TODO: gestion d'erreur
@@ -47,6 +47,8 @@ export class LoginComponent implements OnInit {
             this._appService.post('users/register', this.user).then(res => {
                 if(res.response) {
                     this._cookieService.set('token', res.response.token);
+                    this.registerMode = false;
+                    this.user = new User({});
                 }
                 //TODO: gestion d'erreur
             });

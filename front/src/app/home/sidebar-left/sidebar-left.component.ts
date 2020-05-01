@@ -36,9 +36,9 @@ export class SidebarLeftComponent implements OnInit {
     toggleLeft() {
         $("#sidebarLeft").trigger("sidebar:toggle");
         if ($("#btnSideBarLeft").position().left === 0) {
-            $("#btnSideBarLeft").animate({ left: "+=13%" }, 200);
+            $("#btnSideBarLeft").animate({ left: "+=250px" }, 200);
         } else {
-            $("#btnSideBarLeft").animate({ left: "-=13%" }, 200);
+            $("#btnSideBarLeft").animate({ left: "-=250px" }, 200);
         }
     }
 
@@ -48,7 +48,7 @@ export class SidebarLeftComponent implements OnInit {
     }
 
     getTasks(taskList: TaskList) {
-        this._appService.get('tasks/getByTaskListId/' + taskList.id).then(result => {
+        this._appService.get('tasks/' + taskList.id).then(result => {
             if(result.response) {
                 this.sendTasks.emit({ ttTasks: result.response, taskList: taskList })
             }
@@ -61,7 +61,7 @@ export class SidebarLeftComponent implements OnInit {
     }
 
     saveTaskList(newTaskList) {
-        this._appService.post('taskList/add', newTaskList).then(res => {
+        this._appService.post('taskList', newTaskList).then(res => {
             if(res.response) {
                 newTaskList.new = false;
                 newTaskList.id = res.response.newId;
@@ -78,7 +78,7 @@ export class SidebarLeftComponent implements OnInit {
             confirmButtonText: 'Confirmer'
         }).then((result) => {
             if (result.value) {
-                this._appService.delete('taskList/delete/' + taskListId).then(res => {
+                this._appService.delete('taskList/' + taskListId).then(res => {
                     if (res.response) {
                         this.ttTaskList = this.ttTaskList.filter(taskList => taskListId !== taskList.id);
                     }

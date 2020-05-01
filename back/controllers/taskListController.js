@@ -27,7 +27,7 @@ class TaskListController {
             queryStr = `INSERT INTO task_list (name, user_id, deleted)
             VALUES ($1, $2, $3) RETURNING id;`;
             let result = await pool.query(queryStr, [taskList.name, userId, 'false']);
-            return res.status(200).json({ response: { newId: result.rows[0].id } });
+            return res.status(201).json({ response: { newId: result.rows[0].id } });
         } catch (err) {
             return res.status(500).json({ error: err.message });
         }
