@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { authenticate } = require('../../middleware/authenticate')
+const { authenticate } = require('../../middleware/authenticate');
 const TasksController = require('../../controllers/tasksController');
 
 router.get('/getByTaskListId/:taskListId', authenticate, TasksController.getByTaskListId);

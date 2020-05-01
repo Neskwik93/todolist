@@ -4,7 +4,7 @@ class TasksController {
     static async getByTaskListId(req, res) {
         let taskListId = req.params.taskListId;
         try {
-            let result = await pool.query('SELECT * FROM tasks WHERE task_list_id=$1 AND NOT deleted;', [taskListId]);
+            let result = await pool.query('SELECT * FROM tasks WHERE task_list_id=$1 AND NOT deleted ORDER BY id;', [taskListId]);
             return res.status(200).json({ response: result.rows });
         } catch (err) {
             return res.status(500).json({ error: err.message });
@@ -14,7 +14,7 @@ class TasksController {
     static async add(req, res) {
         let task = req.body;
         if (!task.task_list_id || !task.short_desc || !task.end_date) {
-            return res.status(400).json({ error: 'missing parameters' });
+            return res.status(200).json({ error: 'missing parameters' });
         }
         try {
             let queryStr = `INSERT INTO tasks 
@@ -43,7 +43,7 @@ class TasksController {
     static async complete(req, res) {
         let task = req.body;
         if (!task.completed || !task.id) {
-            return res.status(400).json({ error: 'missing parameters' });
+            return res.status(200).json({ error: 'missing parameters' });
         }
         try {
             await pool.query('UPDATE tasks SET completed=$1 WHERE id=$2;', [task.completed, task.id]);

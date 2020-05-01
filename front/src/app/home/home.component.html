@@ -1,10 +1,33 @@
-<div id="sidebarLeft">salut</div>
-<button class="btnPerso" id="btnSideBarLeft" (click)="toggleLeft()"><i class="fas fa-bars"></i></button>
-<div id="sidebarRight">maman</div>
-<div class="container">
+<app-sidebar-left [ttTaskList]="ttTaskList" (sendTasks)="getTasks($event)"></app-sidebar-left>
+<div class="container main-content">
     <div class="row">
         <div class="col">
-
+            <div class="card">
+                <div class="card-header">
+                    <button *ngIf="ttTask" class="iconBtn" title="Ajouter une tâche" (click)="addTask()"
+                        style="position: fixed;">
+                        <i class="fas fa-plus-circle fa-2x"></i>
+                    </button>
+                    <h3 class="text-center">{{title}}</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row" *ngIf="ttTask && ttTask.length > 0">
+                        <div class="col" *ngFor="let task of ttTask">
+                            <div class="card">
+                                <div class="card-header">
+                                    <button class="btnLink" (click)="selectTask(task)">
+                                        {{task.short_desc}}
+                                    </button>
+                                </div>
+                                <div class="card-body">
+                                    {{task.long_sec}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+<app-sidebar-right [selectedTask]="selectedTask"></app-sidebar-right>

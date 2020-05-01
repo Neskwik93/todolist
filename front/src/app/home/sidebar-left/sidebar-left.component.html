@@ -1,0 +1,28 @@
+<div id="sidebarLeft">
+    <div class="mb-4">
+        <button class="btnLink" (click)="logOut()">
+            <i class="fas fa-sign-out-alt"></i>
+            Deconnexion
+        </button>
+    </div>
+    <div class="mb-4">
+        <button class="btnLink" (click)="addList()">
+            <i class="fas fa-plus-circle"></i> Nouvelle liste
+        </button>
+    </div>
+    <div class="mb-2" style="font-size: 1.4rem;">Liste de tâches</div>
+    <ul class="taskList">
+        <li *ngFor="let taskList of ttTaskList">
+            <button *ngIf="!taskList.newList" class="iconBtn red mr-2" title="Supprimer"
+                (click)="deleteList(taskList.id)">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+            <button *ngIf="taskList.newList" class="iconBtn mr-2" (click)="saveTaskList(taskList)" title="Enregistrer">
+                <i class="fas fa-save"></i>
+            </button>
+            <button class="btnLink" (click)="getTasks(taskList)" *ngIf="!taskList.newList">{{taskList.name}}</button>
+            <input type="text" style="width: 70%;" *ngIf="taskList.newList" [(ngModel)]="taskList.name">
+        </li>
+    </ul>
+</div>
+<button class="btnPerso" id="btnSideBarLeft" (click)="toggleLeft()"><i class="fas fa-bars"></i></button>

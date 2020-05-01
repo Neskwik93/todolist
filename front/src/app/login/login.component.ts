@@ -26,8 +26,8 @@ export class LoginComponent implements OnInit {
     login() {
         if(this.user.password && this.user.email) {
             this._appService.post('users/login', this.user).then(res => {
-                if(res.response) {
-                    this._cookieService.set('token', res.response.token);
+                if(res.token) {
+                    this._cookieService.set('token', res.token);
                     this._router.navigate(['/home']);
                 }
                 //TODO: gestion d'erreur

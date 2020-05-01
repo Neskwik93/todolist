@@ -1,27 +1,51 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 
+$bleu_fonce : #3f51b5;
+$bleu_clair : #3f51b5a1;
+
 body {
     position   : relative;
     margin     : 0;
     font-family: "Open Sans", sans-serif;
 
-    .card {
-        border: 1px solid #3f51b5a1;
+    #app-title {
+        font-family: 'Times New Roman', Times, serif;
+        font-size  : 4rem;
+        color      : $bleu_fonce;
+    }
 
-        .card-header {
-            background-color: #3f51b5a1;
+    .iconBtn {
+        border          : none;
+        background-color: #f0f8ff00;
+        color           : white;
+
+        &.red {
+            color: #fd5e5e;
         }
     }
 
-    .form-group {
-        margin: 20px 0;
+    .main-content {
+        margin-top: 20px;
 
-        input {
-            border-radius: 5px;
-            border       : 1.5px solid #3f51b5;
+        .card {
+            border: 1px solid $bleu_clair;
 
-            &:focus {
-                outline: none;
+            .card-header {
+                background-color: $bleu_clair;
+                color           : white;
+            }
+        }
+
+        .form-group {
+            margin: 20px 0;
+
+            input {
+                border-radius: 5px;
+                border       : 1.5px solid $bleu_fonce;
+
+                &:focus {
+                    outline: none;
+                }
             }
         }
     }
@@ -29,7 +53,7 @@ body {
     button {
         &.btnPerso {
             padding         : 10px 20px;
-            background-color: #3f51b5;
+            background-color: $bleu_fonce;
             color           : #fff;
             text-align      : center;
             border          : none;
@@ -41,8 +65,13 @@ body {
         }
 
         &.btnLink {
-            border: none;
-            color : rgb(112, 112, 252);
+            background-color: #00000000;
+            border          : none;
+            color           : white;
+
+            &.blue {
+                color: rgb(112, 112, 252);
+            }
 
             &:hover {
                 text-decoration: underline;

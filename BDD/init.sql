@@ -7,8 +7,7 @@ CREATE TABLE users (
     lastname VARCHAR(100),
     firstname VARCHAR(100),
     email VARCHAR(100),
-    password VARCHAR(100),
-    token VARCHAR 
+    password VARCHAR(100)
 );
 
 INSERT INTO users (lastname, firstname, email, password) VALUES ('Bomann', 'Eric', 'monadressemail@orange.com', 'password');
