@@ -3,6 +3,9 @@
         <div class="card-header">
         </div>
         <div class="card-body" *ngIf="!registerMode">
+            <div class="row text-center" *ngIf="messageError">
+                <div class="col-md-7 offset-md-2 alert alert-danger">{{messageError}}</div>
+            </div>
             <div class="form-wrapper">
                 <div class="row form-group">
                     <label class="col-md-2 offset-md-2" for="mail">Email</label>
@@ -25,6 +28,9 @@
             </div>
         </div>
         <div class="card-body" *ngIf="registerMode">
+            <div class="row text-center" *ngIf="messageError">
+                <div class="col-md-7 offset-md-2 alert alert-danger">{{messageError}}</div>
+            </div>
             <div class="form-wrapper">
                 <div class="row form-group">
                     <label class="col-md-2 offset-md-2" for="lastname">Nom</label>

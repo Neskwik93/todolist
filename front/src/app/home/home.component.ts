@@ -31,7 +31,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.obsInit = this._activatedRoute.data.subscribe(res => {
-            console.log(res)
             if (res.taskList.response) {
                 this.ttTaskList = res.taskList.response;
             }
@@ -52,7 +51,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     getTasks(event: any) {
-        console.log(event)
         this.ttTask = event.ttTasks;
         this.taskList = event.taskList;
         this.title = event.taskList.name;

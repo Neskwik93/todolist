@@ -6,7 +6,6 @@ if(process.env.DB_USER) {
 } else {
     connectionString = `postgresql://neskwik:root@localhost:5432/todolist_db`;
 }
-console.log(connectionString)
 
 const pool = new Pool({
     connectionString: connectionString, 
