@@ -10,3 +10,6 @@ This application was developed for Windows 10, if you try to use it on another e
 Set your current working directory to the root of the repository and execute the following commands:
  - docker build -t back .\back\
  - docker build -t front .\front\
+ - docker-compose up
+ 
+ ## Access the application on localhost
