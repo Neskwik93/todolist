@@ -1,8 +1,8 @@
 # Todolist
-This application is a web application that allow users to create and manages todo list.
-Users must create an account and be logged to create there todo list.
+This web application allows users to create and manage todo lists.
+Users must create an account and be logged in to create there todo lists.
 ### Environnement
-This application was developed for Windows 10, if you try to use it on another environnement this may not work.
+This application was developed for Windows 10, if you try to use it on another environnement it may not work.
 ### Setup
 #### Prerequisites
  - Docker Desktop must be installed and running
@@ -12,4 +12,4 @@ Set your current working directory to the root of the repository and execute the
  - docker build -t front .\front\
  - docker-compose up
  
- ## Access the application on localhost
+ ## Access the application on localhost:80
